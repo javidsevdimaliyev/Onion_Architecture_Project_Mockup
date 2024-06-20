@@ -1,0 +1,16 @@
+﻿namespace SolutionName.Application.Configurations
+{
+    public sealed class JwtTokenConfig
+    {
+        public bool ValidateAudience { get; init; }
+        public string ValidAudience { get; init; }
+        public bool ValidateIssuer { get; init; }
+        public string ValidIssuer { get; init; }
+        public bool ValidateLifetime { get; init; }
+        public bool ValidateIssuerSigningKey { get; init; }
+        public string IssuerSigningKey { get; init; }
+        public string PasswordSalt { get; init; }
+        public int TokenLifeTime { get; set; }
+        public int RefreshTokenLifeTime { get; set; }
+    }
+}
