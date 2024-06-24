@@ -6,9 +6,9 @@
 
         DateTime UpdatedDate { get; set; }
 
-        long CreatedUserId { get; set; }
+        int CreatedUserId { get; set; }
 
-        long? UpdatedUserId { get; set; }
+        int? UpdatedUserId { get; set; }
 
         int OrderIndex { get; set; }
     }

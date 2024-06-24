@@ -28,17 +28,17 @@ public static class IdentityHelper
         return (ClaimsIdentity)new HttpContextAccessor().HttpContext?.User?.Identity;
     }
 
-    public static long GetId()
+    public static int GetId()
     {
         var userId = GetUserIdentity().FindFirst(CustomClaimTypeConsts.UserId)?.Value;
-        return !string.IsNullOrEmpty(userId) ? Convert.ToInt64(userId) : 0;
+        return !string.IsNullOrEmpty(userId) ? Convert.ToInt32(userId) : 0;
     }
 
-    public static long GetUserId()
+    public static int GetUserId()
     {
         var userId = GetUserIdentity()?.FindFirst(CustomClaimTypeConsts.UserId)?.Value;
         //var result = Convert.ToInt32(GetUserIdentity().FindFirst(ClaimTypes.NameIdentifier)?.Value);
-        return !string.IsNullOrEmpty(userId) ? Convert.ToInt64(userId) : 0;
+        return !string.IsNullOrEmpty(userId) ? Convert.ToInt32(userId) : 0;
     }
 
     private static string? GetFunctionalRoleClaimValue()

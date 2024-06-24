@@ -6,8 +6,7 @@ using SolutionName.Application.Features.Commands.AccountCommands.RefreshToken;
 
 namespace SolutionName.WebAPI.Controllers.Auth
 {
-    [AllowAnonymous]
-    [Route("api/v{v:apiVersion}/auth")]
+    [AllowAnonymous]    
     public class AuthController : BaseController
     {
 

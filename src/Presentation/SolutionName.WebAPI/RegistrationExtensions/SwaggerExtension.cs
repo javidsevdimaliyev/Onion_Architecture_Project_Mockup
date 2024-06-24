@@ -15,7 +15,7 @@ namespace SolutionName.WebAPI.RegistrationExtensions
             services.AddSwaggerGen(options =>
             {
                 options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = Assembly.GetExecutingAssembly().GetName().Name, Version = "v1", Description = "App Rest Services" });
+                //options.SwaggerDoc("v1", new OpenApiInfo { Title = Assembly.GetExecutingAssembly().GetName().Name, Version = "v1", Description = "App Rest Services" });
                 //options.DocumentFilter<SwaggerDocumentFilter>();
                 Dictionary<string, IEnumerable<string>> security = new()
             {
@@ -125,5 +125,7 @@ namespace SolutionName.WebAPI.RegistrationExtensions
                 return info;
             }
         }
+
+
     }
 }

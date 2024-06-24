@@ -16,11 +16,11 @@ public class UserTokenEntity : IdentityUserToken<int>, IAuditableEntity<int>
 
     [Required] public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
-    public long CreatedUserId { get; set; }
+    public int CreatedUserId { get; set; }
 
     public DateTime UpdatedDate { get; set; }
 
-    public long? UpdatedUserId { get; set; }
+    public int? UpdatedUserId { get; set; }
 
     public int OrderIndex { get; set; } = 0;
 

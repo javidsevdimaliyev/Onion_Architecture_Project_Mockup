@@ -8,12 +8,9 @@ using SolutionName.Domain.Entities;
 using SolutionName.Domain.Entities.Common;
 using SolutionName.Domain.Entities.Identity;
 using SolutionName.Persistence.Extensions;
-using System.Reflection.Emit;
 
 namespace SolutionName.Persistence.Contexts
-{
-    //IdentityDbContext<UserEntity, RoleEntity, long, UserClaimEntity,
-    //UserRoleEntity, RoleClaimEntity, IdentityUserLogin<long>>
+{    
     public class EFDbContext : IdentityDbContext<UserEntity, RoleEntity, int, UserClaimEntity, UserRoleEntity, IdentityUserLogin<int>, RoleClaimEntity, UserTokenEntity>
     {
         public EFDbContext(DbContextOptions options) : base(options)
@@ -23,15 +20,7 @@ namespace SolutionName.Persistence.Contexts
         public DbSet<OrderEntity> Orders { get; set; }
         public DbSet<CustomerEntity> Customers { get; set; }
 
-        //public DbSet<Domain.Entities.File> Files { get; set; }
-        //public DbSet<ProductImageFile> ProductImageFiles { get; set; }
-        //public DbSet<InvoiceFile> InvoiceFiles { get; set; }
-        //public DbSet<Basket> Baskets { get; set; }
-        //public DbSet<BasketItem> BasketItems { get; set; }
-        //public DbSet<CompletedOrder> CompletedOrders { get; set; }
-        //public DbSet<Menu> Menus { get; set; }
-        //public DbSet<Endpoint> Endpoints { get; set; }
-
+     
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<OrderEntity>()
@@ -41,16 +30,7 @@ namespace SolutionName.Persistence.Contexts
                 .HasIndex(o => o.OrderCode)
                 .IsUnique();
 
-            //builder.Entity<Basket>()
-            //    .HasOne(b => b.Order)
-            //    .WithOne(o => o.Basket)
-            //    .HasForeignKey<Order>(b => b.Id);
-
-            //builder.Entity<Order>()
-            //    .HasOne(o => o.CompletedOrder)
-            //    .WithOne(c => c.Order)
-            //    .HasForeignKey<CompletedOrder>(c => c.OrderId);
-
+       
             builder.ApplyGlobalFilters<IEntity>(e => e.IsDeleted == false);
             base.OnModelCreating(builder);
         }

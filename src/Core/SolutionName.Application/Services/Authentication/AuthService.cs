@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using SolutionName.Application.Abstractions.Services;
 using SolutionName.Application.Abstractions.Services.Authentication;
 using SolutionName.Application.Abstractions.Services.Authorization;
+using SolutionName.Application.Constants;
 using SolutionName.Application.DTOs.Account.Authentication.User;
 using SolutionName.Application.Features.Commands.AccountCommands.Login;
 using SolutionName.Application.Features.Commands.AccountCommands.RefreshToken;
-using SolutionName.Application.Constants;
 using SolutionName.Application.Utilities.Extensions;
 using SolutionName.Domain.Enums;
 using System.Security.Claims;
-using SolutionName.Application.DTOs.Account.Authorization.Claim;
-using Microsoft.AspNetCore.Http;
 
 namespace SolutionName.Application.Services.Authentication
 {

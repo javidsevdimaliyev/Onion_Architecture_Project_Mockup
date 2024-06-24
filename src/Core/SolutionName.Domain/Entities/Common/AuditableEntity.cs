@@ -14,10 +14,10 @@ namespace SolutionName.Domain.Entities.Common
         public DateTime UpdatedDate { get; set; }
 
         [Column("CreatedUserId")]
-        public long CreatedUserId { get; set; }
+        public int CreatedUserId { get; set; }
 
         [Column("UpdatedUserId")]
-        public long? UpdatedUserId { get; set; }
+        public int? UpdatedUserId { get; set; }
 
         [Required]
         [Column("IsDeleted")]

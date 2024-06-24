@@ -26,9 +26,9 @@ public class UserEntity : IdentityUser<int>, IAuditableEntity<int>
     public byte[] TimeStamp { get; set; }
 
     public DateTime CreatedDate { get; set; } = DateTime.Now;
-    public long CreatedUserId { get; set; }
+    public int CreatedUserId { get; set; }
     public DateTime UpdatedDate { get; set; }
-    public long? UpdatedUserId { get; set; }
+    public int? UpdatedUserId { get; set; }
     public bool IsDeleted { get; set; }
     public int OrderIndex { get; set; } = 0;
     //Refresh Token Columns

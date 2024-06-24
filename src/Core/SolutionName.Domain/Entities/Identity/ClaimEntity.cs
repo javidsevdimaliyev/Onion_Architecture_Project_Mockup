@@ -1,8 +1,10 @@
 ﻿using SolutionName.Domain.Entities.Common;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SolutionName.Domain.Entities.Identity;
 
+[Table("Claims")]
 public class ClaimEntity : BaseEntity<int>
 {
     public ClaimEntity()
@@ -14,7 +16,7 @@ public class ClaimEntity : BaseEntity<int>
         Name = claimName;
     }
 
-    public long? ParentId { get; set; }
+    public int? ParentId { get; set; }
 
     [MaxLength(255)] public string Name { get; set; }
 

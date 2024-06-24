@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Primitives;
-using SolutionName.Application.Models.Common;
 using SolutionName.Application.Enums;
 using SolutionName.Application.Exceptions;
+using SolutionName.Application.Models.Common;
 using SolutionName.Application.Utilities.Extensions;
 using System.Diagnostics;
 using System.Net;
@@ -34,6 +35,8 @@ public class APIResponseMiddleware : IMiddleware
         {
             await next.Invoke(context);
             watch.Stop();
+           
+           
             if (context.Response.StatusCode == (int)HttpStatusCode.OK)
             {
                 var body = await FormatResponse(context.Response);
@@ -154,8 +157,8 @@ public class APIResponseMiddleware : IMiddleware
                 _ => new ApiException(HttpResponseStatus.Exception.GetDescription())
             };
 
-            apiResponse = new APIResponse(code, HttpResponseStatus.Failure.GetDescription(), null, apiexception,
-                "1.0.0.0", ms.ToString());
+            var apiVersion = context.Features.Get<IApiVersioningFeature>()?.RequestedApiVersion;
+            apiResponse = new APIResponse(code, HttpResponseStatus.Failure.GetDescription(), null, apiexception, apiVersion.ToString(), ms.ToString());
             //   context.Response.StatusCode = code;
             var json = apiResponse.GetSerialized();
 
@@ -176,7 +179,7 @@ public class APIResponseMiddleware : IMiddleware
         var bodyContent = bodyText.GetDeserialized<object>();
         var type = bodyContent?.GetType();
 
-
+        var apiVersion = context.Features.Get<IApiVersioningFeature>()?.RequestedApiVersion;
         if (type == typeof(APIResponse) || typeof(APIResponse).IsAssignableFrom(type))
         {
             var resp = (APIResponse)bodyContent;
@@ -185,8 +188,7 @@ public class APIResponseMiddleware : IMiddleware
         }
         else
         {
-            var apiResponse = new APIResponse(code, HttpResponseStatus.Success.GetDescription(), bodyContent, null,
-                "", ms.ToString());
+            var apiResponse = new APIResponse(code, HttpResponseStatus.Success.GetDescription(), bodyContent, null, apiVersion.ToString(), ms.ToString());
             jsonString = apiResponse.GetSerialized();
         }
 

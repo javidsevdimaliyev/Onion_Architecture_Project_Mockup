@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Scrutor;
 using SolutionName.Application;
@@ -13,7 +14,7 @@ namespace SolutionName.Persistence
 {
     public static class ServiceRegistration
     {
-        public static void AddPersistenceServices(this IServiceCollection services)
+        public static IServiceCollection AddPersistenceServices(this IServiceCollection services)
         {
             services.AddDbContext<EFDbContext>(options => options.UseNpgsql(Configuration.ConnectionString));
             services.AddIdentityCore<UserEntity>(options =>
@@ -23,7 +24,8 @@ namespace SolutionName.Persistence
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
-            }).AddEntityFrameworkStores<EFDbContext>();
+            }).AddEntityFrameworkStores<EFDbContext>()
+            .AddDefaultTokenProviders();
            
             services.AddScoped(typeof(IReadRepository<,>), typeof(EFReadRepository<,>));
             services.AddScoped(typeof(IRepository<,>), typeof(EFRepository<,>));
@@ -42,39 +44,9 @@ namespace SolutionName.Persistence
            .UsingRegistrationStrategy(RegistrationStrategy.Skip)
            .AsImplementedInterfaces()
            .WithScopedLifetime());
-            //services.AddIdentity<AppUser, AppRole>(options =>
-            //{
-            //    options.Password.RequiredLength = 3;
-            //    options.Password.RequireNonAlphanumeric = false;
-            //    options.Password.RequireDigit = false;
-            //    options.Password.RequireLowercase = false;
-            //    options.Password.RequireUppercase = false;
-            //}).AddEntityFrameworkStores<ETicaretAPIDbContext>()
-            //.AddDefaultTokenProviders();
 
-            //services.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
-            //services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
-            //services.AddScoped<IOrderReadRepository, OrderReadRepository>();
-            //services.AddScoped<IOrderWriteRepository, OrderWriteRepository>();
-            //services.AddScoped<IProductReadRepository, ProductReadRepository>();
-            //services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
-            //services.AddScoped<IFileReadRepository, FileReadRepository>();
-            //services.AddScoped<IFileWriteRepository, FileWriteRepository>();
-            //services.AddScoped<IProductImageFileReadRepository, ProductImageFileReadRepository>();
-            //services.AddScoped<IProductImageFileWriteRepository, ProductImageFileWriteRepository>();
-            //services.AddScoped<IInvoiceFileReadRepository, InvoiceFileReadRepository>();
-            //services.AddScoped<IInvoiceFileWriteRepository, InvoiceFileWriteRepository>();
-            //services.AddScoped<IBasketItemReadRepository, BasketItemReadRepository>();
-            //services.AddScoped<IBasketItemWriteRepository, BasketItemWriteRepository>();
-            //services.AddScoped<IBasketReadRepository, BasketReadRepository>();
-            //services.AddScoped<IBasketWriteRepository, BasketWriteRepository>();
-            //services.AddScoped<ICompletedOrderReadRepository, CompletedOrderReadRepository>();
-            //services.AddScoped<ICompletedOrderWriteRepository, CompletedOrderWriteRepository>();
-            //services.AddScoped<IEndpointReadRepository, EndpointReadRepository>();
-            //services.AddScoped<IEndpointWriteRepository, EndpointWriteRepository>();
-            //services.AddScoped<IMenuReadRepository, MenuReadRepository>();
-            //services.AddScoped<IMenuWriteRepository, MenuWriteRepository>();
-   
+
+            return services;
         }
     }
 }

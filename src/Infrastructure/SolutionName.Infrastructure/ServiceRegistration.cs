@@ -11,12 +11,15 @@ namespace SolutionName.Infrastructure
 {
     public static class ServiceRegistration
     {
-        public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             //services.AddScoped<ICacheService, MemoryCacheService>();
             services.AddFileService(configuration);
             services.AddStorage<LocalStorageService>();
+            services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IJwtTokenService, JwtTokenService>();
+
+            return services;
         }
 
         public static void AddStorage<T>(this IServiceCollection serviceCollection) where T : class, IStorageService

@@ -16,7 +16,7 @@ namespace SolutionName.Application.DTOs.Common
 
         [DataMember(EmitDefaultValue = false)]
          [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public long? UpdatedUserId { get; set; }
+        public int? UpdatedUserId { get; set; }
 
 
         [DataMember(EmitDefaultValue = false)]

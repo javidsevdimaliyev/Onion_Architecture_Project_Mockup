@@ -6,7 +6,7 @@ namespace SolutionName.Domain.Entities.Identity;
 
 public class UserClaimEntity : IdentityUserClaim<int>, IEntity<int>
 {
-    public long ClaimId { get; set; }
+    public int ClaimId { get; set; }
 
     [ForeignKey(nameof(ClaimId))] 
     public ClaimEntity Claim { get; set; }
