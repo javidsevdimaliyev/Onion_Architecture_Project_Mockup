@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SolutionName.Application.Features.Queries.AccountQueries.GetAllUsers
+namespace SolutionName.Application.Features.Queries.Account.GetRolesToUser
 {
-    internal class GetAllUsersHandler
+    public class GetRolesToUserResponse
     {
     }
 }

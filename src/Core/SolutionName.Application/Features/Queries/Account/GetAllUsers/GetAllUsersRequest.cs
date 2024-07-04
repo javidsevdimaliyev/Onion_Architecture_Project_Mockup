@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SolutionName.Application.Models.Requests;
 
-namespace SolutionName.Application.Features.Queries.AccountQueries.GetAllUsers
+namespace SolutionName.Application.Features.Queries.Account.GetAllUsers
 {
     public class GetAllUsersRequest : IRequest<GetAllUsersResponse>
     {

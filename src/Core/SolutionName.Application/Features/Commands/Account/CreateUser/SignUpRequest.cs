@@ -2,7 +2,7 @@
 using SolutionName.Application.DTOs.Account.Authorization.UserRole;
 using SolutionName.Domain.Enums;
 
-namespace SolutionName.Application.Features.Commands.AccountCommands.Create
+namespace SolutionName.Application.Features.Commands.Account.Create
 {
     public class SignUpRequest : IRequest<SignUpResponse>, IMapTo<UserEntity>
     {

@@ -1,7 +1,7 @@
 ﻿using SolutionName.Application.Abstractions.Services.Authentication;
-using SolutionName.Application.Features.Commands.AccountCommands.Login;
+using SolutionName.Application.Features.Commands.Account.Login;
 
-namespace SolutionName.Application.Features.Commands.AccountCommands.RefreshToken
+namespace SolutionName.Application.Features.Commands.Account.RefreshToken
 {
     public class RefreshTokenHandler : IRequestHandler<RefreshTokenRequest, LoginByPasswordResponse>
     {

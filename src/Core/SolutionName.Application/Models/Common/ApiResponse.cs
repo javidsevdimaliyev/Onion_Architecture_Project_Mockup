@@ -36,7 +36,8 @@ public class APIResponse
 
     [DataMember(EmitDefaultValue = false)] public object? Result { get; set; }
 
-    [DataMember(EmitDefaultValue = false)] public string ExecutingTime { get; set; }
+    private string executingTime;
+    [DataMember(EmitDefaultValue = false)] public string ExecutingTime { get => executingTime; set => executingTime = value + " ms"; }
 
     [DataMember] public string ServerName { get; set; }
 }

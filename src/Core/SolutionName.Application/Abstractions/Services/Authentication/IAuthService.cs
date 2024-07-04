@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.Data;
-using SolutionName.Application.Features.Commands.AccountCommands.Login;
-using SolutionName.Application.Features.Commands.AccountCommands.RefreshToken;
+using SolutionName.Application.Features.Commands.Account.Login;
+using SolutionName.Application.Features.Commands.Account.RefreshToken;
 
 namespace SolutionName.Application.Abstractions.Services.Authentication
 {

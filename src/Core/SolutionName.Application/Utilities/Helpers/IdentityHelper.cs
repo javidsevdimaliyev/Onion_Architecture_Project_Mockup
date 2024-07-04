@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using SolutionName.Application.Constants;
 using System.Security.Claims;
 
@@ -12,7 +14,6 @@ public static class IdentityHelper
     public static ClaimsIdentity UserIdentity => GetUserIdentity();
     public static IEnumerable<Claim> UserClaims => GetUserClaims();
     public static bool UserIsAuthenticated => GetUserIsAuthenticated();
-    public static string MainOrganCodeOneMillion => "1000000";
     public static int AuthenticationType
     {
         get
@@ -39,6 +40,16 @@ public static class IdentityHelper
         var userId = GetUserIdentity()?.FindFirst(CustomClaimTypeConsts.UserId)?.Value;
         //var result = Convert.ToInt32(GetUserIdentity().FindFirst(ClaimTypes.NameIdentifier)?.Value);
         return !string.IsNullOrEmpty(userId) ? Convert.ToInt32(userId) : 0;
+    }
+
+    public static UserManager<T> GetUserManager<T>() where T : class
+    {
+        return new HttpContextAccessor().HttpContext.RequestServices.GetService<UserManager<T>>();
+    }
+
+    public static RoleManager<T> GetRoleManager<T>() where T : class
+    {
+        return new HttpContextAccessor().HttpContext.RequestServices.GetService<RoleManager<T>>();
     }
 
     private static string? GetFunctionalRoleClaimValue()
@@ -74,12 +85,6 @@ public static class IdentityHelper
         return identity.Claims.FirstOrDefault(x => x.Type == claimType);
     }
 
-
-    //public static UserManager<T> GetUserManager<T>() where T : class
-    //{
-    //    return new HttpContextAccessor().HttpContext.RequestServices.GetService<UserManager<T>>();
-    //}
-
     public static string GetUserClaimValue(string claimName)
     {
         var identity = GetUserIdentity().Claims.FirstOrDefault(x => x.Type == claimName);
@@ -91,6 +96,7 @@ public static class IdentityHelper
     {
         return GetUserIdentity().Claims.Any(x => x.Type == claimName);
     }
+
 
     private static bool GetUserIsAuthenticated()
     {

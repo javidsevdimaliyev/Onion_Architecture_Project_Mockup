@@ -31,12 +31,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Commands\CustomerCommands\" />
-    <Folder Include="Features\Commands\OrderCommands\" />
-    <Folder Include="Features\Commands\ProductCommands\" />
-    <Folder Include="Features\Queries\AccountQueries\GetUserById\" />
-    <Folder Include="Features\Queries\CustomerQueries\" />
-    <Folder Include="Features\Queries\OrderQueries\" />
+    <Folder Include="Features\Commands\Customer\" />
+    <Folder Include="Features\Commands\Order\" />
+    <Folder Include="Features\Commands\Product\" />
+    <Folder Include="Features\Queries\Account\GetUserById\" />
+    <Folder Include="Features\Queries\Customer\" />
+    <Folder Include="Features\Queries\Order\" />
     <Folder Include="Validators\Customer\" />
     <Folder Include="Validators\Order\" />
     <Folder Include="Validators\Product\" />

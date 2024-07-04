@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SolutionName.Application.Abstractions.Services.Authentication;
 
-namespace SolutionName.Application.Features.Commands.AccountCommands.Create
+namespace SolutionName.Application.Features.Commands.Account.Create
 {
     internal class SignUpHandler : IRequestHandler<SignUpRequest, SignUpResponse>
     {

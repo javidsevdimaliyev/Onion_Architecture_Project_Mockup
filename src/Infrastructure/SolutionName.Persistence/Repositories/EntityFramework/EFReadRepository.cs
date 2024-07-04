@@ -2,9 +2,14 @@
 using SolutionName.Application.Abstractions.Repositories.EntityFramework;
 using SolutionName.Domain.Entities.Common;
 using SolutionName.Persistence.Contexts;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SolutionName.Persistence.Repositories.EntityFramework
 {

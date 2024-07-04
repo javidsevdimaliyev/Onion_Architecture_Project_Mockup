@@ -2,7 +2,7 @@
 using MediatR;
 
 
-namespace SolutionName.Application.Features.Commands.AccountCommands.Login
+namespace SolutionName.Application.Features.Commands.Account.Login
 {
     public class LoginByPasswordRequest : IRequest<LoginByPasswordResponse>
     {

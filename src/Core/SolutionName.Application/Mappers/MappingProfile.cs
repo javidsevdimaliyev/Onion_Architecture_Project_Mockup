@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using SolutionName.Application.Abstractions.Common.Mapper;
 using System.Reflection;
 
 namespace SolutionName.Application.Mappers

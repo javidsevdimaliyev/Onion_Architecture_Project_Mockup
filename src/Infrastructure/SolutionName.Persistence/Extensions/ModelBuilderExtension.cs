@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using System;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace SolutionName.Persistence.Extensions

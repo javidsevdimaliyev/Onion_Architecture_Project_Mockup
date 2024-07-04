@@ -2,15 +2,20 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Extensions.Logging;
 using SolutionName.Application.Enums;
 using SolutionName.Application.Utilities.Helpers;
 using SolutionName.Domain.Entities;
 using SolutionName.Domain.Entities.Common;
 using SolutionName.Domain.Entities.Identity;
 using SolutionName.Persistence.Extensions;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SolutionName.Persistence.Contexts
-{    
+{
     public class EFDbContext : IdentityDbContext<UserEntity, RoleEntity, int, UserClaimEntity, UserRoleEntity, IdentityUserLogin<int>, RoleClaimEntity, UserTokenEntity>
     {
         public EFDbContext(DbContextOptions options) : base(options)
@@ -20,7 +25,7 @@ namespace SolutionName.Persistence.Contexts
         public DbSet<OrderEntity> Orders { get; set; }
         public DbSet<CustomerEntity> Customers { get; set; }
 
-     
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<OrderEntity>()
@@ -30,9 +35,16 @@ namespace SolutionName.Persistence.Contexts
                 .HasIndex(o => o.OrderCode)
                 .IsUnique();
 
-       
+
             builder.ApplyGlobalFilters<IEntity>(e => e.IsDeleted == false);
             base.OnModelCreating(builder);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+#if DEBUG
+            base.OnConfiguring(optionsBuilder.UseLoggerFactory(ApplicationLoggerFactory));
+#endif
         }
 
         /// <summary>
@@ -41,14 +53,32 @@ namespace SolutionName.Persistence.Contexts
         /// <param name="cancellationToken"></param>      
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            //ChangeTracker : It is the property that enables the capture of changes made on entities or newly added data. It allows us to capture and obtain the data tracked in Update operations.
-
-            var currentUserId = IdentityHelper.GetUserId();
+            //ChangeTracker : It is the property that enables the capture of changes made on entities or newly added data. It allows us to capture and obtain the data tracked in Update operations.         
             ChangeTracker.DetectChanges();
+            ApplyConcurrencyUpdates();
+            ApplyAuditCreates();
+            ApplyAuditUpdates();
 
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void ApplyConcurrencyUpdates()
+        {
+            var entities = ChangeTracker.Entries<ICheckConcurrency>()
+                .Where(e => e.State is EntityState.Modified or EntityState.Added);
+
+            foreach (var entityEntry in entities)
+            {
+                entityEntry.Entity.RowVersion = Guid.NewGuid();
+            }
+        }
+
+        private void ApplyAuditCreates()
+        {
+            var currentUserId = IdentityHelper.GetUserId();
             var added = ChangeTracker.Entries()
-                .Where(t => t.State == EntityState.Added)
-                .Select(t => t.Entity);
+               .Where(t => t.State == EntityState.Added)
+               .Select(t => t.Entity);
 
             foreach (var entity in added)
             {
@@ -73,7 +103,12 @@ namespace SolutionName.Persistence.Contexts
                     }
                 }
             }
+        }
 
+        private void ApplyAuditUpdates()
+        {
+
+            var currentUserId = IdentityHelper.GetUserId();
             var modified = ChangeTracker.Entries()
                 .Where(t => t.State == EntityState.Modified)
                 .Select(t => t.Entity);
@@ -97,8 +132,16 @@ namespace SolutionName.Persistence.Contexts
                     }
                 }
             }
-
-            return await base.SaveChangesAsync(cancellationToken);
         }
+
+
+        private static readonly ILoggerFactory ApplicationLoggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder.AddFilter((category, level) =>
+                    category == DbLoggerCategory.Database.Command.Name
+                    && level == LogLevel.Information)
+                  //.AddConsole()
+                    .AddDebug();
+        });
     }
 }

@@ -5,10 +5,6 @@ namespace SolutionName.Application.DTOs.Account.Authentication.User;
 public class UserUpdateByDirectorRequest : BaseDto<int>, IMapTo<UserEntity>
 {
     #region fields
-    public string IdHash { get; set; }
-    [JsonIgnore]
-    public int Id { get { return Decrypt<int>(IdHash); } set { IdHash = Encrypt(value); } }
-
     private string _name;
     public string Name
     {

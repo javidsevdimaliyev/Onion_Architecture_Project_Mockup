@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SolutionName.Application.Features.Queries.AccountQueries.GetRolesToUser
+namespace SolutionName.Application.Features.Queries.Account.GetRolesToUser
 {
     public class GetRolesToUserHandler : IRequestHandler<GetRolesToUserRequest, GetRolesToUserResponse>
     {

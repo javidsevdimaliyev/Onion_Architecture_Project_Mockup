@@ -11,8 +11,4 @@ public class RoleUpdateRequest : BaseDto<int>, IMapTo<RoleEntity>
     public string[] DeletedRoleClaimsHash { get; set; }
     [JsonIgnore]
     public int[] DeletedRoleClaims { get { return Decrypt(DeletedRoleClaimsHash); } }
-    public string IdHash { get; set; }
-    [JsonIgnore]
-    public int Id { get { return Decrypt<int>(IdHash); } set { IdHash = Encrypt(value); } }
-
 }

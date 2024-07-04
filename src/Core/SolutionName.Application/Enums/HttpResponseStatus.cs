@@ -1,13 +1,13 @@
 ﻿using Application.Shared.Resources;
 using SolutionName.Application.Attributes;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace SolutionName.Application.Enums;
 
 public enum HttpResponseStatus
 {
     #region System exceptions [0 - 1000]
-
     [Description("Successfully executed.")]
     Success = 200,
     [Description("An error occurred.")]

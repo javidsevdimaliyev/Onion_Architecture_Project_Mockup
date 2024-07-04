@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using SolutionName.Application.Features.Commands.AccountCommands.Login;
+using SolutionName.Application.Features.Commands.Account.Login;
 
 namespace SolutionName.Application.Validators.Account
 {

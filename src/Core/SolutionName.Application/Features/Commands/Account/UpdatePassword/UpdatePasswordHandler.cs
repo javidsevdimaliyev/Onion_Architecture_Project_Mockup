@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using SolutionName.Application.Abstractions.Services.Authentication;
+using SolutionName.Application.Features.Commands.AccountCommands.PasswordReset;
 
-namespace SolutionName.Application.Features.Commands.AccountCommands.PasswordReset
+namespace SolutionName.Application.Features.Commands.Account.UpdatePassword
 {
     public class UpdatePasswordHandler : IRequestHandler<UpdatePasswordRequest, UpdatePasswordResponse>
     {

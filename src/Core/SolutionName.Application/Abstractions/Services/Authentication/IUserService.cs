@@ -1,6 +1,6 @@
 ﻿using SolutionName.Application.DTOs.Account.Authentication.User;
-using SolutionName.Application.Features.Commands.AccountCommands.Create;
-using SolutionName.Application.Features.Commands.AccountCommands.PasswordReset;
+using SolutionName.Application.Features.Commands.Account.Create;
+using SolutionName.Application.Features.Commands.Account.UpdatePassword;
 using SolutionName.Application.Models.Requests;
 using SolutionName.Domain.Enums;
 using System.Linq.Expressions;

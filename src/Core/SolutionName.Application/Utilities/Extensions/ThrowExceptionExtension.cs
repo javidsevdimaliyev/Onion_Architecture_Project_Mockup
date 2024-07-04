@@ -1,5 +1,4 @@
 ﻿using Application.Shared.Resources;
-using SolutionName.Application.Enums;
 using SolutionName.Application.Exceptions;
 
 

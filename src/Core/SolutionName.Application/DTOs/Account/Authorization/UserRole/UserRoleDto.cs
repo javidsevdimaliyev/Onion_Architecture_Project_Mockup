@@ -9,8 +9,4 @@ public class UserRoleDto : BaseDto<int>, IMapTo<UserRoleEntity>
     [JsonIgnore]
     public int UserId { get { return Decrypt<int>(UserIdHash); } set { UserIdHash = Encrypt(value); } }
     public bool IsDeleted { get; set; }
-    public string IdHash { get; set; }
-    [JsonIgnore]
-    public int Id { get { return Decrypt<int>(IdHash); } set { IdHash = Encrypt(value); } }
-
 }

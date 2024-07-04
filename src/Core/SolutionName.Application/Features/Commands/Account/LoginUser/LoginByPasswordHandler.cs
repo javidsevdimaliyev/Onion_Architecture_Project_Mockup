@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SolutionName.Application.Abstractions.Services.Authentication;
 
-namespace SolutionName.Application.Features.Commands.AccountCommands.Login
+namespace SolutionName.Application.Features.Commands.Account.Login
 {
     public class LoginByPasswordHandler : IRequestHandler<LoginByPasswordRequest, LoginByPasswordResponse>
     {

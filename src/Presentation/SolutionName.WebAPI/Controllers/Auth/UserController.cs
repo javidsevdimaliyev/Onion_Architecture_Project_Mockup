@@ -2,13 +2,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SolutionName.Application.Abstractions.Services;
-using SolutionName.Application.Features.Commands.AccountCommands.AssignRoleToUser;
-using SolutionName.Application.Features.Commands.AccountCommands.Create;
-using SolutionName.Application.Features.Commands.AccountCommands.PasswordReset;
-using SolutionName.Application.Features.Queries.AccountQueries.GetAllUsers;
-using SolutionName.Application.Features.Queries.AccountQueries.GetRolesToUser;
 using SolutionName.Application.Attributes;
 using SolutionName.Application.Enums;
+using SolutionName.Application.Features.Commands.Account.Create;
+using SolutionName.Application.Features.Commands.Account.UpdatePassword;
+using SolutionName.Application.Features.Commands.AccountCommands.AssignRoleToUser;
+using SolutionName.Application.Features.Commands.AccountCommands.PasswordReset;
+using SolutionName.Application.Features.Queries.Account.GetAllUsers;
+using SolutionName.Application.Features.Queries.Account.GetRolesToUser;
 
 namespace SolutionName.WebAPI.Controllers.Auth
 {

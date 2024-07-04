@@ -11,8 +11,4 @@ public class RoleClaimUpdateRequest : BaseDto<int>, IMapTo<RoleClaimEntity>
     [JsonIgnore]
     public int ClaimId { get { return Decrypt<int>(ClaimIdHash); } set { ClaimIdHash = Encrypt(value); } }
     public bool IsDeleted { get; set; }
-    public string IdHash { get; set; }
-    [JsonIgnore]
-    public int Id { get { return Decrypt<int>(IdHash); } set { IdHash = Encrypt(value); } }
-
 }

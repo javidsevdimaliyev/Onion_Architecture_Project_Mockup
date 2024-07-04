@@ -5,47 +5,44 @@ using System.Reflection;
 namespace SolutionName.Application.Utilities.Extensions;
 
 public static class CustomMapperExtension
-{
-    public static bool IsList(this object obj, IQueryable<long> officer)
+{ 
+    public static T Map<T>(this object mapObject, 
+                           params string[] ignoreProperties) where T : class
     {
-        if (obj == null) return false;
-        return obj is IList &&
-               obj.GetType().IsGenericType &&
-               obj.GetType().GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>));
+        return mapObject.Map<T>(null, null, ignoreProperties);
+    }
+   
+    public static T Map<T>(this object mapObject, 
+                            List<MapMember> members = null, 
+                            params string[] ignoreProperties) where T : class
+    {
+        return mapObject.Map<T>(null, members, ignoreProperties);
     }
 
-    //public static T Map<T>(this object mapObject, params string[] ignoreProperties)
-    //    where T : class
-    //{
-    //    return mapObject.Map<T>(null, null, ignoreProperties);
-    //}
-    //public static T Map<T>(this object mapObject, List<MapMember> members = null, params string[] ignoreProperties)
-    //    where T : class
-    //{
-    //    return mapObject.Map<T>(null, members, ignoreProperties);
-    //}
-
-    //public static T Map<T>(this object mapObject, T resultObject, params string[] ignoreProperties)
-    //    where T : class
-    //{
-    //    return mapObject.Map<T>(resultObject, null, ignoreProperties);
-    //}
-
-    public static IEnumerable<T> Map<T>(this IEnumerable mapObject, IEnumerable<T> resultObject = null,
-        List<MapMember> members = null, params string[] ignoreProperties)
-        where T : class
+    public static T Map<T>(this object mapObject, 
+                            T resultObject, 
+                            params string[] ignoreProperties) where T : class
     {
-        if (mapObject == null) return null;
+        return mapObject.Map<T>(resultObject, null, ignoreProperties);
+    }
+
+    public static IEnumerable<T> Map<T>(this IEnumerable mapObjects, 
+                                        IEnumerable<T> resultObject = null,
+                                        List<MapMember> members = null,
+                                        params string[] ignoreProperties) where T : class
+    {
+        if (mapObjects == null || !mapObjects.IsCollection()) return null;
 
         var result = (List<T>)resultObject ?? new List<T>();
-        foreach (var item in mapObject) result.Add(item.Map<T>(null, members, ignoreProperties));
+        foreach (var item in mapObjects) result.Add(item.Map<T>(null, members, ignoreProperties));
 
         return result;
     }
 
-    public static T Map<T>(this object mapObject, T resultObject = null, List<MapMember> members = null,
-        params string[] ignoreProperties)
-        where T : class
+    public static T Map<T>(this object mapObject, 
+                            T resultObject = null, 
+                            List<MapMember> members = null,
+                            params string[] ignoreProperties) where T : class
     {
         if (members == null)
             members = new List<MapMember>();
@@ -91,8 +88,10 @@ public static class CustomMapperExtension
     }
 
 
-    public static T MapProperty<T>(this object mapObject, string propertyName, T resultObject,
-        string mapPropertyName = null) where T : class
+    public static T MapProperty<T>(this object mapObject, 
+                                    string propertyName, 
+                                    T resultObject,
+                                    string mapPropertyName = null) where T : class
     {
         var target = typeof(T);
         var instance = resultObject ?? Activator.CreateInstance(target, null);
@@ -123,21 +122,22 @@ public static class CustomMapperExtension
 
     #region MapFromNestedProperty
 
-    public static IEnumerable<T> MapNested<T>(this IEnumerable mapObject, List<MapMember> members = null,
-        params string[] ignoreProperties)
-        where T : class
+    public static IEnumerable<T> MapNested<T>(this IEnumerable mapObjects, 
+                                              List<MapMember> members = null,
+                                              params string[] ignoreProperties) where T : class
     {
-        if (mapObject == null) return null;
+        if (mapObjects == null || !mapObjects.IsCollection()) return null;
 
         var result = new List<T>();
-        foreach (var item in mapObject) result.Add(item.MapNested<T>(members, ignoreProperties));
+        foreach (var item in mapObjects) result.Add(item.MapNested<T>(members, ignoreProperties));
 
         return result;
     }
 
-    public static T MapNested<T>(this object mapObject, List<MapMember> members = null,
-        params string[] ignoreProperties)
-        where T : class
+    public static T MapNested<T>(this object mapObject, 
+                                List<MapMember> members = null,
+                                params string[] ignoreProperties)
+                                where T : class
     {
         if (members == null)
             members = new List<MapMember>();
@@ -190,101 +190,18 @@ public static class CustomMapperExtension
     }
 
     #endregion
+
+    #region Helper
+    private static bool IsCollection(this object obj)
+    {
+        if (obj == null) return false;
+        return obj is IList &&
+               obj.GetType().IsGenericType &&
+               obj.GetType().GetGenericTypeDefinition().IsAssignableFrom(typeof(IEnumerable<>));
+    }
+    #endregion
 }
 
-public class PropertyWork<TEntity> where TEntity : class
-{
-    public static PropertyInfo[] GetProperties()
-    {
-        return typeof(TEntity).GetProperties();
-    }
-
-    public static PropertyInfo GetProperty(string propertyName)
-    {
-        return !string.IsNullOrEmpty(propertyName) ? typeof(TEntity).GetProperty(propertyName) : null;
-    }
-}
-
-public class PropertyWork
-{
-    public static PropertyInfo[] GetProperties(object obj)
-    {
-        return obj?.GetType().GetProperties();
-    }
-
-    public static PropertyInfo[] GetProperties(object obj, Type[] propertyTypes)
-    {
-        return obj?.GetType().GetProperties().Where(x => propertyTypes.Contains(x.PropertyType)).ToArray();
-    }
-
-    public static object GetValue(object obj, PropertyInfo property)
-    {
-        return property.GetValue(obj, null);
-    }
-
-    public static object GetValue(object obj, string propertyName)
-    {
-        if (!string.IsNullOrEmpty(propertyName))
-            return obj?.GetType().GetProperty(propertyName)?.GetValue(obj, null);
-
-        return null;
-    }
-}
-
-public static class TypeExtension
-{
-    public static PropertyInfo[] GetPropertiesWithoutAttribute<T>(this Type type) where T : Attribute
-    {
-        return type.GetProperties().Where(x => !Attribute.IsDefined(x, typeof(T))).ToArray();
-    }
-
-    public static PropertyInfo[] GetPropertiesWithoutAttribute<T>(this object obj) where T : Attribute
-    {
-        return obj.GetType().GetPropertiesWithoutAttribute<T>();
-    }
-
-    public static PropertyInfo GetProperty(this object obj, string propertyName)
-    {
-        if (!string.IsNullOrEmpty(propertyName))
-            return obj?.GetType().GetProperty(propertyName);
-
-        return null;
-    }
-
-    public static PropertyInfo GetPropertyWithoutAttribute<T>(this Type type, string propertyName) where T : Attribute
-    {
-        if (!string.IsNullOrEmpty(propertyName))
-            return type.GetPropertiesWithoutAttribute<T>().FirstOrDefault(x => x.Name == propertyName);
-
-        return null;
-    }
-
-    public static PropertyInfo GetPropertyWithoutAttribute<T>(this object obj, string propertyName) where T : Attribute
-    {
-        return obj.GetType().GetPropertyWithoutAttribute<T>(propertyName);
-    }
-
-    public static object GetPropertyValue(this object obj, string propertyName)
-    {
-        return obj.GetProperty(propertyName)?.GetValue(obj, null);
-    }
-
-
-    public static bool IsSimple(this Type type)
-    {
-        var typeInfo = type.GetTypeInfo();
-        if (typeInfo.IsGenericType && typeInfo.GetGenericTypeDefinition() == typeof(Nullable<>))
-            // nullable type, check if the nested type is simple.
-            return typeInfo.GetGenericArguments()[0].IsSimple();
-        return typeInfo.IsPrimitive
-               || typeInfo.IsEnum
-               || type.Equals(typeof(string))
-               || type.Equals(typeof(DateTime))
-               || type.Equals(typeof(object))
-               || type.Equals(typeof(decimal))
-               || type.Equals(typeof(TimeSpan));
-    }
-}
 
 public class MapMember
 {

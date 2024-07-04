@@ -1,8 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
+using SolutionName.Application.Attributes;
 using SolutionName.Application.Constants;
 using SolutionName.Application.DTOs.Account.Authentication.User;
+using SolutionName.Application.Enums;
+using SolutionName.Application.Models.Shared;
 using SolutionName.Application.Utilities.Utility;
+using System.Reflection;
 
 namespace SolutionName.WebAPI.Controllers
 {
@@ -22,12 +27,53 @@ namespace SolutionName.WebAPI.Controllers
             return Ok("Worked !");
         }
 
+        [HttpGet]
+        [AuthorizeDefinition(ActionType = ActionType.Reading, RoleName = "Admin")]
+        public IActionResult GetAuthorizeDefinitionEndpoints()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            var controllers = assembly.GetTypes().Where(t => t.IsAssignableTo(typeof(ControllerBase)));
+
+            List<AuthDefinitionModel> enpoints = new();
+            if (controllers != null)
+                foreach (var controller in controllers)
+                {
+                    var actions = controller.GetMethods().Where(m => m.IsDefined(typeof(AuthorizeDefinitionAttribute)));
+                    if (actions != null)
+                        foreach (var action in actions)
+                        {
+                            var attributes = action.GetCustomAttributes(true);
+                            if (attributes != null)
+                            {
+                                AuthDefinitionModel point = null;
+
+                                var authorizeDefinitionAttribute = attributes.FirstOrDefault(a => a.GetType() == typeof(AuthorizeDefinitionAttribute)) as AuthorizeDefinitionAttribute;
+                                //Your logic here...
+                            }
+                        }
+                }
+
+
+            return Ok(enpoints);
+        }
+
+        #region helper Methods
         // Get source IP address for the current request
         protected string IpAddress()
         {
             if (Request.Headers.ContainsKey(ApiHeaderKeysConst.XForwardedFor))
                 return Request.Headers[ApiHeaderKeysConst.XForwardedFor];
             return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+        }
+
+        private string GetHeaderValue(IHttpContextAccessor httpContextAccessor, string headerKey)
+        {
+            if (httpContextAccessor.HttpContext != null && httpContextAccessor.HttpContext.Request.Headers.TryGetValue(headerKey, out StringValues headerValues))
+            {
+                return headerValues.First();
+            }
+
+            return string.Empty;
         }
 
         #region Cookie operations
@@ -90,6 +136,7 @@ namespace SolutionName.WebAPI.Controllers
 
             return Convert.ToInt32(TextEncryption.Decrypt(id.ToString()));
         }
+        #endregion
         #endregion
 
     }

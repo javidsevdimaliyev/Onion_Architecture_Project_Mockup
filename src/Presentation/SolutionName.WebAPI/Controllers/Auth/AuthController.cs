@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SolutionName.Application.Features.Commands.AccountCommands.Login;
-using SolutionName.Application.Features.Commands.AccountCommands.RefreshToken;
+using SolutionName.Application.Features.Commands.Account.Login;
+using SolutionName.Application.Features.Commands.Account.RefreshToken;
 
 namespace SolutionName.WebAPI.Controllers.Auth
 {

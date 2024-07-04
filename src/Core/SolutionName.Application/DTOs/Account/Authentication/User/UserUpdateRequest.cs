@@ -4,10 +4,6 @@ namespace SolutionName.Application.DTOs.Account.Authentication.User;
 
 public class UserUpdateRequest : BaseDto<int>, IMapTo<UserEntity>
 {
-    public string IdHash { get; set; }
-    [JsonIgnore]
-    public int Id { get { return Decrypt<int>(IdHash); } set { IdHash = Encrypt(value); } }
-
     public string Name { get; set; }
     public string Surname { get; set; }
     public string Fathername { get; set; }

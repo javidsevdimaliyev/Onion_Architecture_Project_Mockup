@@ -3,7 +3,7 @@ using SolutionName.Application.Exceptions;
 using SolutionName.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace SolutionName.Application.Features.Commands.AccountCommands.Create
+namespace SolutionName.Application.Features.Commands.Account.Create
 {
     public class SignUpResponse : IMapTo<UserEntity>
     {
