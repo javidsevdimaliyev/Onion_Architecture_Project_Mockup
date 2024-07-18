@@ -12,7 +12,7 @@ using SolutionName.Persistence.Repositories.EntityFramework;
 
 namespace SolutionName.Persistence
 {
-    public static class ServiceRegistration
+    public static class ConfigureServices
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services)
         {

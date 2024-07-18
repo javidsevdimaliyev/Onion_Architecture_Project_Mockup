@@ -10,11 +10,11 @@ using SolutionName.Application.Services.Authorization;
 
 namespace SolutionName.Application
 {
-    public static class ServiceRegistration
+    public static class ConfigureServices
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddMediatR(conf => conf.RegisterServicesFromAssembly(typeof(ServiceRegistration).Assembly));
+            services.AddMediatR(conf => conf.RegisterServicesFromAssembly(typeof(ConfigureServices).Assembly));
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();

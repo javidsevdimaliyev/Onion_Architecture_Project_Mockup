@@ -20,14 +20,8 @@ public struct CustomClaimTypeConsts
     public const string Administrator = "Admin";
     public const string AuthenticationType = "AuthenticationType";
     public const string TwoFactorEnabled = "TwoFactorEnabled";
-    public const string AsanSignUserId = "AsanSignUserId";
-    public const string AsanPhoneNumber = "AsanPhoneNumber";
-    public const string AsanSignCertificateKey = "AsanSignCertificateKey";
-    public const string AsanSignCertificateValue = "AsanSignCertificateValue";
-    public const string Tin = "Tin";
     public const string Positions = nameof(Positions);
-    public const string UserOrganizationId = nameof(UserOrganizationId);
-    public const string UserOrganizationName = nameof(UserOrganizationName);
+
 
     //public const string UserId = "http://projectdomain.com/UserId";
     public const string UserTypeId = "http://projectdomain.com/UserTypeId";

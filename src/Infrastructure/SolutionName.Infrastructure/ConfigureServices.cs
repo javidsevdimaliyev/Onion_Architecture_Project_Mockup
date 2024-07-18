@@ -9,7 +9,7 @@ using SolutionName.Infrastructure.Services.Storage.Local;
 
 namespace SolutionName.Infrastructure
 {
-    public static class ServiceRegistration
+    public static class ConfigureServices
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
@@ -37,8 +37,8 @@ namespace SolutionName.Infrastructure
             };
 
             services.AddScoped<IFileStorageService>(provider => new FileStorageService(config));
-            
-           
+
+
             return services;
         }
     }

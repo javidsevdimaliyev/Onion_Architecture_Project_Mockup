@@ -1,15 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SolutionName.Application.Abstractions.Services;
-using SolutionName.Application.Configurations;
 using SolutionName.Application.Constants;
 using SolutionName.Application.Enums;
 using SolutionName.Application.Exceptions;
 using SolutionName.Application.Utilities.Extensions;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+
 
 namespace SolutionName.Infrastructure.Services
 {

@@ -1,4 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SolutionName.Application.Abstractions.Services;
@@ -6,10 +14,7 @@ using SolutionName.Application.Constants;
 using SolutionName.Application.Enums;
 using SolutionName.Application.Utilities.Extensions;
 using SolutionName.Domain.Entities.Identity;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
+
 
 namespace SolutionName.Infrastructure.Services;
 
