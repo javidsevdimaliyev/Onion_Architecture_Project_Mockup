@@ -73,7 +73,7 @@ namespace SolutionName.Persistence.Repositories.EntityFramework
             var type = typeof(TEntity);
             var query = tracking
                 ? _dbSet.AsQueryable()
-                : _dbSet.AsQueryable().AsNoTracking();
+                : _dbSet.AsQueryable().AsNoTrackingWithIdentityResolution();  // or AsNoTracking()
             return query.TagWith(type.FullName!);
         }
 
