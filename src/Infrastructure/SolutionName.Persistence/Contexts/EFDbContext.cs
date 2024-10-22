@@ -77,8 +77,8 @@ namespace SolutionName.Persistence.Contexts
         {
             var currentUserId = IdentityHelper.GetUserId();
             var added = ChangeTracker.Entries()
-               .Where(t => t.State == EntityState.Added)
-               .Select(t => t.Entity);
+               .Where(e => e.State == EntityState.Added)
+               .Select(s => s.Entity);
 
             foreach (var entity in added)
             {
@@ -110,8 +110,8 @@ namespace SolutionName.Persistence.Contexts
 
             var currentUserId = IdentityHelper.GetUserId();
             var modified = ChangeTracker.Entries()
-                .Where(t => t.State == EntityState.Modified)
-                .Select(t => t.Entity);
+                .Where(e => e.State == EntityState.Modified)
+                .Select(e => e.Entity);
 
             foreach (var entity in modified)
             {

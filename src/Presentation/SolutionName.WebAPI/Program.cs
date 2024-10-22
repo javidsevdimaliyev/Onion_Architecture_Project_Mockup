@@ -27,8 +27,11 @@ Logger log = LoggerExtension.SetSeriLogConfiguration(builder);
 
 builder.Host.UseSerilog(log);
 
-/// Response Middleware
+/// Register Response Middleware
 builder.Services.AddTransient<APIResponseMiddleware>();
+/// Register JwtMiddleware service
+builder.Services.AddTransient<JwtMiddleware>();
+
 
 builder.Services.AddControllers(options =>
 {
@@ -86,6 +89,8 @@ app.Use(async (context, next) =>
 app.UseCors();
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<JwtMiddleware>();
 
 app.UseAuthorization();
 

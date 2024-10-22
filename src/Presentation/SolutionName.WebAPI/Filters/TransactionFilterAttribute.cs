@@ -78,23 +78,23 @@ public sealed class TransactionAttribute : ActionFilterAttribute //, IDisposable
         base.OnResultExecuted(filterContext);
     }
 
-    //~TransactionAttribute()
-    //{
-    //    Dispose(false);
-    //}
+    ~TransactionAttribute()
+    {
+        Dispose(false);
+    }
 
-    //private void Dispose(bool disposing)
-    //{
-    //    if (disposing)
-    //    {
-    //        _transactionScope.Dispose();
-    //        _transaction.Dispose();
-    //    }
-    //}
+    private void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            _transactionScope.Dispose();
+            _transaction.Dispose();
+        }
+    }
 
-    //public void Dispose()
-    //{
-    //    Dispose(true);
-    //    GC.SuppressFinalize(this);
-    //}
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 }
