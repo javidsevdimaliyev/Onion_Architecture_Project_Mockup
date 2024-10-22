@@ -60,7 +60,7 @@ namespace SolutionName.Persistence.Repositories.EntityFramework
             return await FindQueryable(null, tracking).ToListAsync(cancellationToken: cancellationToken);
         }
 
-      
+
         public async Task<ICollection<TType>> FindSpecificColumnsAsync<TType>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TType>> select) where TType : class
         {
             IQueryable<TEntity> query = FindQueryable(predicate);
@@ -85,7 +85,7 @@ namespace SolutionName.Persistence.Repositories.EntityFramework
 
             var type = typeof(TEntity);
             if (predicate != null)
-                query = query.Where(predicate);       
+                query = query.Where(predicate);
 
             if (splitQuery)
                 query = query.AsSplitQuery();
@@ -93,25 +93,24 @@ namespace SolutionName.Persistence.Repositories.EntityFramework
             return query;
         }
 
-        public IQueryable<TEntity> FindQueryable(Expression<Func<TEntity, bool>> predicate, bool tracking = true,
+        public IQueryable<TEntity> FindQueryable(Expression<Func<TEntity, bool>> predicate, bool tracking = true, bool splitQuery = false,
             params Expression<Func<TEntity, object>>[] includeExpressions)
         {
-            IQueryable<TEntity> query = FindQueryable(predicate, true);
+            IQueryable<TEntity> query = FindQueryable(predicate, tracking, splitQuery);
             if (includeExpressions.Length > 0)
             {
                 query = includeExpressions.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
                 //foreach (var includeExpression in includeExpressions)
                 //   query = query.Include(includeExpression);               
             }
-            if (!tracking)
-                query = query.AsNoTracking();
+
             return query;
         }
 
- 
-        public IQueryable<TEntity> Filter<TEntity>(IQueryable<TEntity> query, 
+
+        public IQueryable<TEntity> Filter<TEntity>(IQueryable<TEntity> query,
           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, int page, int pageSize, out int count)
-        {           
+        {
             if (orderBy != null)
             {
                 query = orderBy(query);

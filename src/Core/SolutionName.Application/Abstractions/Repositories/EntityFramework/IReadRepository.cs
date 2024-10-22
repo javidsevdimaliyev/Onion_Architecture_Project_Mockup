@@ -24,10 +24,9 @@ namespace SolutionName.Application.Abstractions.Repositories.EntityFramework
 
         IQueryable<TEntity> Query(bool tracking = true);
 
-        IQueryable<TEntity> FindQueryable(Expression<Func<TEntity, bool>> predicate = null, bool tracking = true,
-            bool splitQuery = false);
+        IQueryable<TEntity> FindQueryable(Expression<Func<TEntity, bool>> predicate = null, bool tracking = true, bool splitQuery = false);
 
-        IQueryable<TEntity> FindQueryable(Expression<Func<TEntity, bool>> predicate, bool tracking = true,
+        IQueryable<TEntity> FindQueryable(Expression<Func<TEntity, bool>> predicate, bool tracking = true, bool splitQuery = false,
             params Expression<Func<TEntity, object>>[] includeExpressions);
 
         IQueryable<TEntity> Filter<TEntity>(IQueryable<TEntity> query, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, int page, int pageSize, out int count);
